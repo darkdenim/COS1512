@@ -21,13 +21,13 @@ int main()
     // open marks.dat in read mode
     ifstream file;
     file.open("marks.dat");
-    cout << "Reading marks.dat ..." << endl; 
     
     int items[4];
     size_t pos = 0;
     string delimiter = " ";
     string token;
     string s;
+    cout << "***marks.dat***" << endl;
     while (getline(file, s))
     {
         int i = 0;
@@ -51,7 +51,18 @@ int main()
         
         double avg = (a1 + a2 + a3) / 3;
         double ym = avg * 0.4 + (HighestMark(a1, a2, a3) * 0.6);
-        outFile << sn << " " << avg << " " << ym << endl;
-        
+        outFile << sn << " ";
+        //outFile << sn << " " << std::setprecision(5) << avg << " " << ym << endl;
+        outFile << avg << " " << ym << endl;
     }
+    outFile.close();
+    file.close();
+    
+    file.open("yearmark.dat");
+    cout << "***yearmark.dat***" << endl;
+    while (getline(file, s))
+    {
+        cout << s << endl;
+    }
+    cout << "***END OF PROGRAM***" << endl;
 }
