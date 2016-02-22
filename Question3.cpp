@@ -17,11 +17,16 @@ int main()
 {
     ofstream outFile;
     outFile.open("yearmark.dat");
-    
+
     // open marks.dat in read mode
     ifstream file;
     file.open("marks.dat");
-    
+	if (file.fail())
+	{
+		cout << "Input file opening failed.\n";
+		exit(1);
+	}
+
     int items[4];
     size_t pos = 0;
     string delimiter = " ";
@@ -39,25 +44,23 @@ int main()
             i++;
         }
         items[i] = atoi(s.c_str());
-        for (int i = 0; i < sizeof(items)/sizeof(*items); i++)
-        {
-            cout << items[i] << endl;
-        }
-        
+
         int sn = items[0];
         int a1 = items[1];
         int a2 = items[2];
         int a3 = items[3];
-        
+
         double avg = (a1 + a2 + a3) / 3;
         double ym = avg * 0.4 + (HighestMark(a1, a2, a3) * 0.6);
         outFile << sn << " ";
-        //outFile << sn << " " << std::setprecision(5) << avg << " " << ym << endl;
+        outFile.setf(ios::fixed);
+        outFile.setf(ios::showpoint);
+        outFile.precision(2);
         outFile << avg << " " << ym << endl;
     }
     outFile.close();
     file.close();
-    
+
     file.open("yearmark.dat");
     cout << "***yearmark.dat***" << endl;
     while (getline(file, s))
